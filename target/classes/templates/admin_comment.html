@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글 관리</title>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Admin Page</h1>
+    <a href="/main" style="color: blue;">KHR BLOG</a><br>
+    <a href="/adminpage" style="color: blue;">관리자 페이지</a>
+
+    <h2 th:text="|제목 : ${commentList[0].title}|"></h2>
+    <h3>댓글 리스트</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>작성자 아이디</th>
+                <th>내용</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="comment : ${commentList}">
+                <td th:text="${comment.id}"></td>
+                <td th:text="${comment.content}"></td>
+                <td>
+                    <button>
+                        <a th:href="@{/comment/delete(seq=${comment.seq},boardSeq=${comment.boardSeq})}">삭제</a>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

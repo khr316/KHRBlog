@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+</head>
+
+<body>
+    <!-- 비회원 : 세션이 없는 경우 (등급 임의로 -1로 지정) 또는 탈퇴회원 -->
+    <div th:if="${userLev} == '-1' or ${userDelFg} == '1'">
+        <a href="/login">로그인</a>
+        <a href="/signup">회원가입</a>
+    </div>
+    <!-- 준회원 : 세션 아이디 등급이 0인 경우 -->
+    <div th:if="${userLev} == '0'">
+        <a href="/logout">로그아웃</a>
+        <a th:href="@{/mypage(id=${id})}">마이페이지</a>
+    </div>
+    <!-- 정회원 : 세션 아이디 등급이 1인 경우 -->
+    <div th:if="${userLev} == '1'">
+        <a href="/logout">로그아웃</a>
+        <a href="/board/insert">글쓰기</a>
+        <a th:href="@{/mypage(id=${id})}">마이페이지</a>
+    </div>
+    <!-- 관리자 : 세션 아이디 등급이 999인 경우 -->
+    <div th:if="${userLev} == '999'">
+        <a href="/logout">로그아웃</a>
+        <a href="/board/insert">글쓰기</a>
+        <a href="/adminpage">관리자페이지</a>
+    </div>
+    <!--글 목록은 모든 사람이 볼 수 있음-->
+    <div>
+        <h2>글 목록</h2>
+        <form action="/board/search"><input type="text" placeholder="내용 검색" name="searchBoardContent">
+            <button type="submit">검색</button>
+        </form>
+        <a href="/board/desc">최신순</a>
+        <a href="/board/asc">오래된순</a>
+        <hr>
+        <div th:each="board : ${boardList}">
+            <span th:text="|주제: ${board.codeNm}|"></span><br>
+            <a th:href="@{/board/detail(seq=${board.seq})}">
+                <span th:text="|제목: ${board.title}|"></span>
+            </a><br>
+            <span th:text="|작성자: ${board.nick}|"></span><br>
+            <span th:text="|조회수: ${board.searchCnt}|"></span><br>
+            <span th:text="|작성일자: ${board.regDt}|"></span><br>
+            <hr>
+        </div>
+    </div>
+
+    <script src="/js/searcnt.js"></script>
+</body>
+
+</html>

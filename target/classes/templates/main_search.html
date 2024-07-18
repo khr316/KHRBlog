@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MainSearch</title>
+</head>
+
+<body>
+    <h2>글 목록</h2>
+    <a href="/main">목록으로</a>
+    <hr>
+    <div th:each="search : ${searchBoardList}">
+        <span th:text="|주제: ${search.codeNm}|"></span><br>
+        <a th:href="@{/board/detail(seq=${search.seq})}">
+            <span th:text="|제목: ${search.title}|"></span>
+        </a><br>
+        <span th:text="|작성자: ${search.nick}|"></span><br>
+        <span th:text="|조회수: ${search.searchCnt}|"></span><br>
+        <span th:text="|작성일자: ${search.regDt}|"></span><br>
+        <hr>
+    </div>
+    <script src="/js/searchcnt.js"></script>
+</body>
+
+</html>

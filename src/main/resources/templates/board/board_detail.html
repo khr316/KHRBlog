@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/board/detail.css">
+
+</head>
+
+<body>
+    <div>
+        <span th:text="${boardDetail.codeNm}"></span><br><br>
+        <span th:text="${boardDetail.nick}"></span><br><br>
+        <span th:text="${boardDetail.title}"></span><br>
+        <span th:text="|조회수 ${boardDetail.searchCnt}|"></span>
+        <!-- 작성일자 (수정 한 경우 숨기기) -->
+        <span th:text="|작성: ${boardDetail.regDt}|"></span>
+        <!-- 수정일자 (수정 했을 경우에만 나타나게 하기) -->
+        <span th:text="|수정: ${boardDetail.modDt}|"></span><br><br>
+        <span th:text="${boardDetail.content}"></span><br><br>
+        <span th:text="|좋아요 ${boardDetail.likeCnt}|"></span>
+        <button onclick="like()">👍</button>
+        <span th:text="|싫어요 ${boardDetail.dislikeCnt}|"></span>
+        <button onclick="dislike()">👎</button><br><br>
+        <hr>
+
+        <!-- 댓글 작성 + 댓글 리스트 -->
+        <div th:each="comment : ${commentList}">
+            <span th:text="|${comment.nick}  ${comment.content}  ${comment.regDt}|"></span>
+        </div><br>
+
+        <button onclick="openCommentForm()">댓글 작성</button>
+
+        <div id="commentForm">
+            <form action="/comment/insert">
+                <input type="hidden" th:value="${boardDetail.seq}" name="boardSeq">
+                <input type="hidden" th:value="${userId}" name="commenter" id="commentId">
+                <input type="text" style="width:300px;height:100px;" name="content" id="commentText" ><br>
+                <button type="submit" onclick="submitComment()">작성</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/comment.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        .btn {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Page</h1>
+    <a href="/main" style="color: blue;">KHR BLOG</a>
+
+    <h2>회원 리스트</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>이름 (닉네임)</th>
+                <th>회원등급</th>
+                <th>회원상태</th>
+                <th>등업</th>
+                <th>탈퇴</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${userList}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}+' ('+${user.nick}+')'"></td>
+                <td th:text="${user.lev}"></td>
+                <td th:text="${user.delFg}"></td>
+                <td><button><a th:href="@{/user/update(id=${user.id})}">등업</a></td></button>
+                <td><button><a th:href="@{/user/delete(id=${user.id})}">탈퇴</a></td></button>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>글 리스트</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>작성자 아이디</th>
+                <th>제목</th>
+                <th>좋아요</th>
+                <th>싫어요</th>
+                <th>조회수</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="board : ${boardList}">
+                <td>[[${board.id}+'&nbsp;&nbsp;&nbsp;']]
+                    <button><a th:href="@{/baord/comment(seq=${board.seq})}">댓글관리</a></button>
+                </td>
+                <td th:text="${board.title}"></td>
+                <td th:text="${board.likeCnt}"></td>
+                <td th:text="${board.dislikeCnt}"></td>
+                <td th:text="${board.searchCnt}"></td>
+                <td><button><a th:href="@{/board/delete(seq=${board.seq})}">삭제</a></button></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
